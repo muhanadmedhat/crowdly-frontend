@@ -2,9 +2,6 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_BACKEND_URL,
   withCredentials: true,
-  headers: {
-    'ngrok-skip-browser-warning': 'true',  
-  }
 });
 
 api.interceptors.request.use(
@@ -13,7 +10,6 @@ api.interceptors.request.use(
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
-      config.headers['ngrok-skip-browser-warning'] = 'true'; // add here too
     }
     return config;
   },
