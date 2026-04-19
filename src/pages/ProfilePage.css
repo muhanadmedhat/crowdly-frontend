@@ -1,0 +1,378 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   ProfilePage.css — Scoped styles for the /profile page
+   Accent: #D85A30  |  Uses design-system CSS variables throughout
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+.profile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+  font-family: var(--font-display, 'Sora', 'Inter', sans-serif);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Profile Header Card
+   ═══════════════════════════════════════════════════════════════════════════ */
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: #fff;
+  border: 1px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+  border-radius: 14px;
+  padding: 28px 32px;
+}
+
+/* ── Avatar ── */
+.profile-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.profile-avatar-img,
+.profile-avatar-initials {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-avatar-img {
+  display: block;
+  border: 2px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.5));
+}
+
+.profile-avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-secondary, #f4f3f1);
+  border: 2px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.5));
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-text-primary, #5d1f1f);
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+/* ── User info ── */
+.profile-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--color-text-primary, #5d1f1f);
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-email {
+  font-size: 14px;
+  color: var(--color-text-secondary, #6b6b6b);
+  margin: 0;
+}
+
+.profile-meta {
+  font-size: 13px;
+  color: var(--color-text-secondary, #6b6b6b);
+  margin: 2px 0 0;
+}
+
+.profile-since {
+  font-size: 12px;
+  color: var(--color-text-secondary, #6b6b6b);
+  margin: 4px 0 0;
+  font-style: italic;
+}
+
+/* ── Action buttons ── */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.profile-btn {
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  white-space: nowrap;
+  min-width: 140px;
+  text-align: center;
+}
+
+.profile-btn--outline {
+  background: transparent;
+  color: var(--color-text-primary, #5d1f1f);
+  border: 1.5px solid var(--color-border-secondary, #dedbd6);
+}
+
+.profile-btn--outline:hover {
+  background: var(--color-background-secondary, #f4f3f1);
+  border-color: var(--color-text-secondary, #6b6b6b);
+  transform: translateY(-1px);
+}
+
+.profile-btn--danger {
+  background: transparent;
+  color: #D85A30;
+  border: 1.5px solid #D85A30;
+}
+
+.profile-btn--danger:hover {
+  background: rgba(216, 90, 48, 0.07);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(216, 90, 48, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Tabs section
+   ═══════════════════════════════════════════════════════════════════════════ */
+.profile-tabs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Tab bar ── */
+.tab-bar {
+  display: flex;
+  border-bottom: 1.5px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.5));
+  gap: 0;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--color-text-secondary, #6b6b6b);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px; /* overlap the tab-bar border */
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+  outline: none;
+}
+
+.tab-btn:hover {
+  color: var(--color-text-primary, #5d1f1f);
+}
+
+.tab-btn--active {
+  color: #D85A30;
+  border-bottom-color: #D85A30;
+  font-weight: 600;
+}
+
+/* ── Tab content card ── */
+.tab-content-card {
+  background: #fff;
+  border: 1px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 28px 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   My Projects tab
+   ═══════════════════════════════════════════════════════════════════════════ */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Wrapper around each card + cancel button */
+.project-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Cancel campaign button — shown below the card */
+.cancel-campaign-btn {
+  width: 100%;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #D85A30;
+  background: rgba(216, 90, 48, 0.06);
+  border: 1.5px solid rgba(216, 90, 48, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.cancel-campaign-btn:hover {
+  background: rgba(216, 90, 48, 0.12);
+  border-color: #D85A30;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   My Donations tab
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Skeleton rows */
+.donation-skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.donation-skeleton-row {
+  height: 60px;
+  border-radius: 8px;
+  background: var(--color-background-secondary, #f4f3f1);
+}
+
+/* Donation list */
+.donation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.donation-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+  border-radius: 8px;
+  padding: 14px 20px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.donation-row:hover {
+  border-color: var(--color-border-secondary, #dedbd6);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.donation-row-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.donation-project-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary, #5d1f1f);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donation-date {
+  font-size: 12px;
+  color: var(--color-text-secondary, #6b6b6b);
+}
+
+.donation-amount {
+  font-size: 16px;
+  font-weight: 500;
+  color: #D85A30;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  /* Stack header vertically on mobile */
+  .profile-header-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 20px;
+    gap: 18px;
+  }
+
+  .profile-info {
+    align-items: center;
+  }
+
+  .profile-name {
+    font-size: 20px;
+    white-space: normal;
+  }
+
+  .profile-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .profile-btn {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  /* Single-column project grid */
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .tab-content-card {
+    padding: 20px 16px;
+  }
+
+  .donation-row {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-avatar-img,
+  .profile-avatar-initials {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-avatar-initials {
+    font-size: 28px;
+  }
+
+  .donation-amount {
+    font-size: 14px;
+  }
+}

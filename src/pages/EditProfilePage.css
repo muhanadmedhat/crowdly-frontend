@@ -1,0 +1,340 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   EditProfilePage.css — Scoped styles for the /profile/edit page
+   Accent: #D85A30  |  Uses design-system CSS variables throughout
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+.edit-profile-page {
+  min-height: calc(100vh - 64px);
+  background: var(--color-background-secondary, #f4f3f1);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 5rem;
+  font-family: var(--font-display, 'Sora', 'Inter', sans-serif);
+}
+
+/* ── Centered card ────────────────────────────────────────────────────────── */
+.edit-profile-card {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Card header (back arrow + title)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.edit-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1.5px solid var(--color-border-secondary, #dedbd6);
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--color-text-primary, #5d1f1f);
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.back-btn:hover {
+  background: var(--color-background-secondary, #f4f3f1);
+  border-color: var(--color-text-secondary, #6b6b6b);
+  transform: translateX(-2px);
+}
+
+.edit-profile-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text-primary, #5d1f1f);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Avatar section
+   ═══════════════════════════════════════════════════════════════════════════ */
+.edit-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-avatar-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-background-secondary, #f4f3f1);
+  border: 2px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.edit-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.edit-avatar-initials {
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--color-text-primary, #5d1f1f);
+  user-select: none;
+  line-height: 1;
+}
+
+.change-photo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #D85A30;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: opacity 150ms ease, text-decoration 150ms ease;
+}
+
+.change-photo-label:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Hidden native file input */
+.photo-file-input {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Form
+   ═══════════════════════════════════════════════════════════════════════════ */
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Single field ─────────────────────────────────────────────────────────── */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary, #5d1f1f);
+  letter-spacing: 0.01em;
+}
+
+.required-star {
+  color: #D85A30;
+  margin-left: 2px;
+}
+
+/* ── Input base ───────────────────────────────────────────────────────────── */
+.field-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-text-primary, #5d1f1f);
+  background: #fff;
+  border: 1.5px solid var(--color-border-tertiary, rgba(222, 219, 214, 0.6));
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field-input::placeholder {
+  color: var(--color-text-secondary, #6b6b6b);
+  opacity: 0.65;
+}
+
+.field-input:focus {
+  border-color: #D85A30;
+  box-shadow: 0 0 0 3px rgba(216, 90, 48, 0.13);
+}
+
+/* Error state */
+.field-input--error {
+  border-color: #D85A30;
+}
+
+.field-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(216, 90, 48, 0.2);
+}
+
+/* Disabled state (email) */
+.field-input--disabled {
+  background: var(--color-background-secondary, #f4f3f1);
+  color: var(--color-text-secondary, #6b6b6b);
+  cursor: not-allowed;
+  border-color: var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+}
+
+.field-input--disabled:focus {
+  border-color: var(--color-border-tertiary, rgba(222, 219, 214, 0.4));
+  box-shadow: none;
+}
+
+/* ── Field-level messages ─────────────────────────────────────────────────── */
+.field-error {
+  font-size: 12px;
+  color: #D85A30;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--color-text-secondary, #6b6b6b);
+  margin: 0;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* ── Form-level feedback messages ─────────────────────────────────────────── */
+.form-success {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2d7a4f;
+  background: rgba(45, 122, 79, 0.08);
+  border: 1px solid rgba(45, 122, 79, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.form-error-msg {
+  font-size: 13px;
+  font-weight: 500;
+  color: #D85A30;
+  background: rgba(216, 90, 48, 0.07);
+  border: 1px solid rgba(216, 90, 48, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Action buttons
+   ═══════════════════════════════════════════════════════════════════════════ */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.action-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease,
+              transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  white-space: nowrap;
+}
+
+/* Cancel — outline */
+.action-btn--cancel {
+  background: transparent;
+  color: var(--color-text-primary, #5d1f1f);
+  border: 1.5px solid var(--color-border-secondary, #dedbd6);
+}
+
+.action-btn--cancel:hover:not(:disabled) {
+  background: var(--color-background-secondary, #f4f3f1);
+  border-color: var(--color-text-secondary, #6b6b6b);
+}
+
+/* Save — filled accent */
+.action-btn--save {
+  background: #D85A30;
+  color: #fff;
+  border: 1.5px solid #D85A30;
+  min-width: 130px;
+}
+
+.action-btn--save:hover:not(:disabled) {
+  background: #c0502a;
+  border-color: #c0502a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(216, 90, 48, 0.35);
+}
+
+.action-btn--save:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.action-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .edit-profile-page {
+    padding: 1.5rem 0 4rem;
+    align-items: flex-start;
+  }
+
+  .edit-profile-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack buttons vertically, Save on top */
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .edit-profile-title {
+    font-size: 18px;
+  }
+}
