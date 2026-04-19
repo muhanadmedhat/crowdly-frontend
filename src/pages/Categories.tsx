@@ -32,11 +32,11 @@ export default function Categories() {
     <main className="min-h-screen bg-[#f6f3ee] px-6 py-12">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10">
-          <h1 className="text-[52px] font-bold leading-none tracking-tight text-black">
+          <h1 className="text-[36px] md:text-[52px] font-bold leading-none tracking-tight text-black">
             Browse Categories
           </h1>
 
-          <p className="mt-3 text-[17px] text-gray-500">
+          <p className="mt-3 text-[15px] md:text-[17px] text-gray-500">
             Find a cause that speaks to you
           </p>
         </div>

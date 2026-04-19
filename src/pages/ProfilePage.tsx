@@ -109,12 +109,12 @@ export default function ProfilePage() {
     })}`;
   };
 
-  const formatDonationDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-    });
+  const formatDonationDate = (dateStr: string | undefined | null) => {
+    if (!dateStr) return 'N/A';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return 'N/A';
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  };
 
   // ── Can this project be cancelled? ─────────────────────────────────────────
   const canCancel = (project: any) =>
@@ -262,11 +262,11 @@ export default function ProfilePage() {
                   {myDonations.map((donation: any) => (
                     <li key={donation.id} className="donation-row">
                       <div className="donation-row-left">
-                        <span className="donation-project-title">
-                          {donation.project?.title ?? donation.project_title ?? 'Project'}
+                          <span className="donation-project-title">
+                          {donation.project_title ?? donation.project?.title ?? `Donation #${donation.id}`}
                         </span>
                         <span className="donation-date">
-                          {formatDonationDate(donation.created_at ?? donation.date)}
+                          {formatDonationDate(donation.donated_at ?? donation.created_at ?? donation.date)}
                         </span>
                       </div>
                       <span className="donation-amount">

@@ -99,8 +99,9 @@ function ProjectDetails() {
     ? 0
     : Math.ceil((Number(new Date(project.end_time)) - Date.now()) / (1000 * 60 * 60 * 24));
   return (
-    <div className="grid grid-cols-3 gap-3 bg-[var(--color-background)] p-5">
-      <div className="col-span-2">
+    <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 bg-[var(--color-background)] p-4 md:p-5">
+      {/* ── Main content ── */}
+      <div className="lg:col-span-2">
         <ImageSlider images={images}></ImageSlider>
         <div className="flex gap-2 flex-wrap items-center mt-6">
           <span className="bg-[rgba(255,86,0,0.1)] text-[var(--color-primary)] border border-[var(--color-primary)] rounded-md label-md px-2 py-1">
@@ -115,7 +116,7 @@ function ProjectDetails() {
             </span>
           ))}
         </div>
-        <h1 className="display-lg mt-3 mb-2">{project.title}</h1>
+        <h1 className="display-lg mt-3 mb-2 text-2xl md:text-4xl lg:text-5xl">{project.title}</h1>
         <p className="body-md text-[var(--color-text-secondary)] leading-relaxed mb-6">
           {project.details}
         </p>
@@ -130,7 +131,7 @@ function ProjectDetails() {
         />
         <div className="mt-12">
           <h3 className="headline-md mb-6">You Might Also Like</h3>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {similarProjects.map((project: any, index) => (
               <Link to={`/projectDetails/${project.id}/`} key={project.id || index}>
                 <ProjectCardDetails
@@ -144,7 +145,9 @@ function ProjectDetails() {
           </div>
         </div>
       </div>
-      <div className="sticky top-6">
+
+      {/* ── Sidebar ── */}
+      <div className="lg:sticky lg:top-6 mt-6 lg:mt-0">
         <div className="card p-6">
           <h2 className="text-3xl font-bold text-[var(--color-on-background)]">
             ${project.total_donated}

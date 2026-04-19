@@ -39,14 +39,17 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden font-[var(--font-display)] antialiased bg-white">
-      <LoginLeftPanel />
+      {/* Left Panel — hidden on mobile */}
+      <div className="hidden md:flex md:flex-1 lg:flex-[1.1]">
+        <LoginLeftPanel />
+      </div>
       {/* Right Panel */}
-      <div className="flex-1 lg:flex-[1.4] bg-white flex justify-center items-center p-8 lg:p-12 h-full overflow-hidden relative border-l border-[#f1f1f1]">
+      <div className="flex-1 lg:flex-[1.4] bg-white flex justify-center items-center p-8 lg:p-12 h-full overflow-y-auto relative border-l border-[#f1f1f1]">
         <div className="w-full max-w-[420px]">
-          <h2 className="text-4xl font-bold text-[#111] mb-2 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#111] mb-2 tracking-tight">
             Log in to your account
           </h2>
-          <p className="font-[var(--font-serif)] italic text-xl text-[#666] mb-8">
+          <p className="font-[var(--font-serif)] italic text-lg md:text-xl text-[#666] mb-8">
             Help drive the next big human-first initiative.
           </p>
 
