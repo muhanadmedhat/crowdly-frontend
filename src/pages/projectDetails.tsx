@@ -21,8 +21,8 @@ function ProjectDetails() {
   const [commentRefresh, setCommentRefresh] = useState(0);
   const [rating, setRating] = useState(0);
   const [userRating, setUserRating] = useState(0);
-  const [images, setImages] = useState([]);
-  const [similarProjects, setSimilarProjects] = useState([]);
+  const [images, setImages] = useState<any[]>([]);
+  const [similarProjects, setSimilarProjects] = useState<any[]>([]);
   const [donationAmount, setDonationAmount] = useState<number | string>('');
   const [isCustomAmount, setIsCustomAmount] = useState(false);
   const user = useSelector((state: any) => state.auth.user);
@@ -301,7 +301,7 @@ function ProjectDetails() {
         </div>
         {user?.username === project.owner && (
           <CreatorToolKit
-            id={params.id}
+            id={Number(params.id)}
             percentage={percentage}
             isExpired={isExpired}
           ></CreatorToolKit>
