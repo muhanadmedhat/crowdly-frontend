@@ -2,17 +2,19 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_BACKEND_URL,
   withCredentials: true,
+  headers: {
+    'ngrok-skip-browser-warning': 'true',  
+  }
 });
 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('access_token');
-
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
+      config.headers['ngrok-skip-browser-warning'] = 'true'; // add here too
     }
-
     return config;
   },
   (error) => Promise.reject(error)
@@ -30,7 +32,12 @@ api.interceptors.response.use(
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_BACKEND_URL}/auth/token/refresh/`,
           {},
-          { withCredentials: true }
+        { 
+        withCredentials: true,
+          headers: {
+          'ngrok-skip-browser-warning': 'true',  // add here too
+            }
+          }
         );
 
         const newAccessToken = res.data.access;

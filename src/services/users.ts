@@ -9,6 +9,7 @@ export interface UpdateUserPayload {
   birthdate?: string;
   facebook_profile?: string;
   country?: string;
+  phone?: string; 
 }
 
 // ── Response Types ─────────────────────────────────────────
