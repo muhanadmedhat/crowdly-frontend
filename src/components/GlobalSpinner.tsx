@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 
 const GlobalSpinner = () => {
-  const isLoading = useSelector((state) => state.ui.loadingCount > 0);
+  const isLoading = useSelector((state:any) => state.ui.loadingCount > 0);
   if (!isLoading) return null;
 
   return (
