@@ -24,7 +24,7 @@ export default function AdminProjectReports() {
   const fetchReports = async () => {
     setLoading(true);
     try {
-      const { data } = await api.get('/admin-panel/reports/projects/?page=1&status=pending');
+      const { data } = await api.get('/interactions/projects/');
       setReports(data.results || data);
     } catch {
       toast.error('Failed to load project reports');
