@@ -10,6 +10,7 @@ interface ModalProps {
   isLoading?: boolean; // disables buttons while async action runs
   onConfirm: () => void;
   onClose: () => void;
+  children?: React.ReactNode;
 }
 
 export default function Modal({
@@ -22,6 +23,7 @@ export default function Modal({
   isLoading = false,
   onConfirm,
   onClose,
+  children,
 }: ModalProps) {
   // Close on Escape key
   useEffect(() => {
@@ -71,6 +73,7 @@ export default function Modal({
 
         {/* Message */}
         <p className="modal-message">{message}</p>
+        {children}
 
         {/* Actions */}
         <div className="modal-actions">

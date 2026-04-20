@@ -11,6 +11,7 @@ import withLoading from '../utils/WithLoading.tsx';
 import { useSelector } from 'react-redux';
 import DonationForm from './DonationForm.tsx';
 import { toast } from 'react-hot-toast';
+import Modal from '../components/Modal.tsx';
 
 const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 function ProjectDetails() {
@@ -25,6 +26,9 @@ function ProjectDetails() {
   const [similarProjects, setSimilarProjects] = useState<any[]>([]);
   const [donationAmount, setDonationAmount] = useState<number | string>('');
   const [isCustomAmount, setIsCustomAmount] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportReason, setReportReason] = useState('other');
+  const [isReporting, setIsReporting] = useState(false);
   const user = useSelector((state: any) => state.auth.user);
   const handleRating = async () => {
     try {
@@ -35,6 +39,20 @@ function ProjectDetails() {
       setCommentRefresh((prev) => prev + 1);
     } catch (error) {
       toast.error('Failed to submit rating. Please try again.');
+    }
+  };
+
+  const handleReportProject = async () => {
+    setIsReporting(true);
+    try {
+      await api.post(`${BASE_URL}/interactions/projects/${params.id}/reports/`, { reason: reportReason });
+      toast.success('Project reported successfully');
+      setIsReportModalOpen(false);
+      setReportReason('other');
+    } catch (error) {
+      toast.error('Failed to report project. Please try again.');
+    } finally {
+      setIsReporting(false);
     }
   };
 
@@ -309,7 +327,45 @@ function ProjectDetails() {
             isExpired={isExpired}
           ></CreatorToolKit>
         )}
+        
+        {user && user.username !== project.owner && (
+          <div className="mt-6 text-center border-t border-[var(--color-outline-variant)] pt-4">
+            <button 
+              onClick={() => setIsReportModalOpen(true)}
+              className="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors mx-auto"
+            >
+              Report this Project
+            </button>
+          </div>
+        )}
       </div>
+
+      <Modal
+        isOpen={isReportModalOpen}
+        title="Report Project"
+        message="Please select a reason for reporting this project:"
+        confirmLabel="Submit Report"
+        onConfirm={handleReportProject}
+        onClose={() => setIsReportModalOpen(false)}
+        isLoading={isReporting}
+      >
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-[var(--color-on-background)] mb-2">
+            Reason:
+          </label>
+          <select
+            value={reportReason}
+            onChange={(e) => setReportReason(e.target.value)}
+            className="w-full border border-[var(--color-outline-variant)] rounded-md px-3 py-2 bg-transparent text-[var(--color-on-background)] outline-none"
+            disabled={isReporting}
+          >
+            <option value="spam">Spam</option>
+            <option value="inappropriate">Inappropriate Content</option>
+            <option value="fraud">Fraud</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </Modal>
     </div>
   );
 }
