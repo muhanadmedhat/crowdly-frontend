@@ -117,6 +117,7 @@ function ProjectDetails() {
     ? 0
     : Math.ceil((Number(new Date(project.end_time)) - Date.now()) / (1000 * 60 * 60 * 24));
   return (
+    <>
     <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 bg-[var(--color-background)] p-4 md:p-5">
       {/* ── Main content ── */}
       <div className="lg:col-span-2">
@@ -327,47 +328,49 @@ function ProjectDetails() {
             isExpired={isExpired}
           ></CreatorToolKit>
         )}
-        
+
         {user && user.username !== project.owner && (
-          <div className="mt-6 text-center border-t border-[var(--color-outline-variant)] pt-4">
-            <button 
+          <div className="mt-4 pt-4 border-t border-[var(--color-outline-variant)] text-center">
+            <button
               onClick={() => setIsReportModalOpen(true)}
-              className="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors mx-auto"
+              className="w-full py-2 px-4 text-sm font-semibold text-red-500 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-500 transition-colors"
             >
-              Report this Project
+              🚩 Report this Project
             </button>
           </div>
         )}
       </div>
-
-      <Modal
-        isOpen={isReportModalOpen}
-        title="Report Project"
-        message="Please select a reason for reporting this project:"
-        confirmLabel="Submit Report"
-        onConfirm={handleReportProject}
-        onClose={() => setIsReportModalOpen(false)}
-        isLoading={isReporting}
-      >
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-[var(--color-on-background)] mb-2">
-            Reason:
-          </label>
-          <select
-            value={reportReason}
-            onChange={(e) => setReportReason(e.target.value)}
-            className="w-full border border-[var(--color-outline-variant)] rounded-md px-3 py-2 bg-transparent text-[var(--color-on-background)] outline-none"
-            disabled={isReporting}
-          >
-            <option value="spam">Spam</option>
-            <option value="inappropriate">Inappropriate Content</option>
-            <option value="fraud">Fraud</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </Modal>
     </div>
+
+    <Modal
+      isOpen={isReportModalOpen}
+      title="Report Project"
+      message="Please select a reason for reporting this project:"
+      confirmLabel="Submit Report"
+      onConfirm={handleReportProject}
+      onClose={() => setIsReportModalOpen(false)}
+      isLoading={isReporting}
+    >
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">
+          Reason
+        </label>
+        <select
+          value={reportReason}
+          onChange={(e) => setReportReason(e.target.value)}
+          className="w-full border border-[var(--color-outline-variant)] rounded-md px-3 py-2 bg-white text-sm outline-none"
+          disabled={isReporting}
+        >
+          <option value="spam">Spam</option>
+          <option value="inappropriate">Inappropriate Content</option>
+          <option value="fraud">Fraud</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </Modal>
+    </>
   );
 }
 
 export default ProjectDetails;
+
