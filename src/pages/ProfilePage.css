@@ -335,11 +335,15 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    gap: 8px;
   }
 
   .profile-btn {
-    flex: 1;
-    min-width: 120px;
+    flex: 1 1 140px;
+    min-width: 130px;
+    max-width: 200px;
+    font-size: 13px;
+    padding: 9px 16px;
   }
 
   /* Single-column project grid */

@@ -21,7 +21,7 @@ export default function AdminUsers() {
     setLoading(true);
     try {
       // Backend mapping: path('', AdminsView.as_view()) in accounts/urls.py
-      const { data } = await api.get('/users/');
+      const { data } = await api.get('/users/me');
       setUsers(data.results || data);
     } catch {
       toast.error('Failed to load users');
@@ -35,7 +35,8 @@ export default function AdminUsers() {
   }, []);
 
   const handleDeleteUser = async (id: number) => {
-    if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+    if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.'))
+      return;
     try {
       await api.delete(`/users/${id}/`);
       toast.success('User deleted successfully');
@@ -45,16 +46,19 @@ export default function AdminUsers() {
     }
   };
 
-  const filteredUsers = users.filter(u => 
-    u.email.toLowerCase().includes(search.toLowerCase()) || 
-    `${u.first_name} ${u.last_name}`.toLowerCase().includes(search.toLowerCase())
+  const filteredUsers = users.filter(
+    (u) =>
+      u.email.toLowerCase().includes(search.toLowerCase()) ||
+      `${u.first_name} ${u.last_name}`.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="animate-fade-in-up">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--color-primary)]">User Management</h1>
-        <p className="text-[var(--color-text-secondary)] mt-1">View and manage all registered users on the platform.</p>
+        <p className="text-[var(--color-text-secondary)] mt-1">
+          View and manage all registered users on the platform.
+        </p>
       </div>
 
       <div className="card p-6 mb-8 ghost-border">
@@ -109,14 +113,16 @@ export default function AdminUsers() {
                     </div>
                   </td>
                   <td className="p-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      user.is_active ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        user.is_active ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                      }`}
+                    >
                       {user.is_active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
                   <td className="p-4 text-right">
-                    <button 
+                    <button
                       className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
                       onClick={() => handleDeleteUser(user.id)}
                       title="Delete User"
@@ -128,7 +134,9 @@ export default function AdminUsers() {
               ))}
               {filteredUsers.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="p-8 text-center text-gray-500">No users found.</td>
+                  <td colSpan={4} className="p-8 text-center text-gray-500">
+                    No users found.
+                  </td>
                 </tr>
               )}
             </tbody>

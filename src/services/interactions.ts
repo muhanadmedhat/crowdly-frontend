@@ -9,7 +9,7 @@ export interface RatingPayload {
 }
 
 export interface ReportPayload {
-  reason: 'inappropriate' | 'spam' | 'fraud' | 'other';
+  reason: 'inappropriate' | 'spam' | 'harassment' | 'other';
 }
 
 // comments

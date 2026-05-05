@@ -205,99 +205,98 @@ function CommunityFeed({ projectId, onInteraction }: CommunityFeedProps) {
             comments.map((c) => (
               <div key={c.id} className="border-t border-[var(--color-outline-variant)] pt-4">
                 {/* Main Comment */}
-                <div className="flex gap-3 items-start justify-between">
-                  <div className="flex gap-3 items-start">
-                    <UserAvatar username={c.author.username} />
-                    <div>
+                <div className="flex gap-3 items-start">
+                  <UserAvatar username={c.author.username} />
+                  <div className="flex-1 min-w-0">
+                    <span className="font-semibold text-sm">{c.author.username}</span>
+                    {editingCommentId === c.id ? (
+                      <div className="mt-1 flex gap-2 items-center">
+                        <input
+                          type="text"
+                          className="bg-[var(--color-surface-low)] rounded-md px-2 py-1 text-sm border border-[var(--color-outline-variant)] focus:border-[var(--color-primary)] outline-none"
+                          value={editingCommentText}
+                          onChange={(e) => setEditingCommentText(e.target.value)}
+                        />
+                        <button
+                          className="text-green-600 hover:text-green-800 text-xs font-semibold px-2 py-1 border border-green-200 rounded hover:bg-green-50 transition-colors"
+                          onClick={() => handleUpdateComment(c.id)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="text-gray-500 hover:text-gray-700 text-xs font-semibold px-2 py-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+                          onClick={() => {
+                            setEditingCommentId(null);
+                            setEditingCommentText('');
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="body-md text-[var(--color-text-secondary)] mt-1">
+                        {c.text}
+                      </p>
+                    )}
 
-                      <span className="font-semibold text-sm">{c.author.username}</span>
-                      {editingCommentId === c.id ? (
-                        <div className="mt-1 flex gap-2 items-center">
-                          <input
-                            type="text"
-                            className="bg-[var(--color-surface-low)] rounded-md px-2 py-1 text-sm border border-[var(--color-outline-variant)] focus:border-[var(--color-primary)] outline-none"
-                            value={editingCommentText}
-                            onChange={(e) => setEditingCommentText(e.target.value)}
-                          />
-                          <button
-                            className="text-green-600 hover:text-green-800 text-xs font-semibold px-2 py-1 border border-green-200 rounded hover:bg-green-50 transition-colors"
-                            onClick={() => handleUpdateComment(c.id)}
-                          >
-                            Save
-                          </button>
-                          <button
-                            className="text-gray-500 hover:text-gray-700 text-xs font-semibold px-2 py-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
-                            onClick={() => {
-                              setEditingCommentId(null);
-                              setEditingCommentText('');
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        <p className="body-md text-[var(--color-text-secondary)] mt-1">
-                          {c.text}
-                        </p>
-                      )}
-
-                      {/* Reply Button */}
+                    {/* Reply / View Replies buttons */}
+                    <div className="flex gap-3 mt-2 flex-wrap">
                       <button
-                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] text-xs mt-2 flex items-center gap-1 transition-colors"
+                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] text-xs flex items-center gap-1 transition-colors"
                         onClick={() => setActiveReplyId(c.id)}
                       >
                         ↩ Reply
                       </button>
-                      {/* View Replies Button */}
                       <button
-                        className="text-[var(--color-primary)] text-xs mt-1 flex items-center gap-1 hover:underline transition-colors"
+                        className="text-[var(--color-primary)] text-xs flex items-center gap-1 hover:underline transition-colors"
                         onClick={() => handleGetReplies(c.id)}
                       >
                         ▾ View Replies
                       </button>
                     </div>
-                  </div>
 
-                  {/* Actions */}
-                  <div className="flex gap-2">
-                    {user?.id === c.author.id ? (
-                      <>
-                        {editingCommentId !== c.id && (
+                    {/* Actions: Report/Update/Delete */}
+                    <div className="flex gap-2 flex-wrap mt-2">
+                      {user?.id === c.author.id ? (
+                        <>
+                          {editingCommentId !== c.id && (
+                            <button
+                              onClick={() => {
+                                setEditingCommentId(c.id);
+                                setEditingCommentText(c.text);
+                              }}
+                              className="text-yellow-500 hover:text-yellow-700 text-xs font-semibold px-2 py-1 border border-yellow-200 rounded hover:bg-yellow-50 transition-colors"
+                            >
+                              Update
+                            </button>
+                          )}
                           <button
-                            onClick={() => {
-                              setEditingCommentId(c.id);
-                              setEditingCommentText(c.text);
-                            }}
-                            className="text-yellow-500 hover:text-yellow-700 text-sm font-semibold px-3 py-1 border border-yellow-200 rounded hover:bg-yellow-50 transition-colors"
+                            onClick={() => handleDeleteComment(c.id)}
+                            className="text-red-500 hover:text-red-700 text-xs font-semibold px-2 py-1 border border-red-200 rounded hover:bg-red-50 transition-colors"
                           >
-                            Update
+                            Delete
                           </button>
-                        )}
-                        <button
-                          onClick={() => handleDeleteComment(c.id)}
-                          className="text-red-500 hover:text-red-700 text-sm font-semibold px-3 py-1 border border-red-200 rounded hover:bg-red-50 transition-colors"
-                        >
-                          Delete
-                        </button>
-                      </>
-                    ) : null}
-                    <select
-                      value={commentReports[c.id] || 'spam'}
-                      onChange={(e) =>
-                        setCommentReports((prev: any) => ({ ...prev, [c.id]: e.target.value }))
-                      }
-                    >
-                      <option value="spam">Spam</option>
-                      <option value="inappropriate">Inappropriate Content</option>
-                      <option value="harassment">Harassment</option>
-                      <option value="other">Other</option>
-                    </select>
-                    <button
-                      onClick={() => handleReportComment(c.id)}
-                      className="text-white-500 hover:text-red-700 text-sm font-semibold px-3 py-1 border border-red-200 rounded hover:bg-red-50 transition-colors"
-                    >
-                      Report
-                    </button>
+                        </>
+                      ) : null}
+                      <select
+                        value={commentReports[c.id] || 'spam'}
+                        onChange={(e) =>
+                          setCommentReports((prev: any) => ({ ...prev, [c.id]: e.target.value }))
+                        }
+                        className="text-xs border border-[var(--color-outline-variant)] rounded px-1 py-0.5"
+                      >
+                        <option value="spam">Spam</option>
+                        <option value="inappropriate">Inappropriate Content</option>
+                        <option value="harassment">Harassment</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <button
+                        onClick={() => handleReportComment(c.id)}
+                        className="text-red-500 hover:text-red-700 text-xs font-semibold px-2 py-1 border border-red-200 rounded hover:bg-red-50 transition-colors"
+                      >
+                        Report
+                      </button>
+                    </div>
                   </div>
                 </div>
 

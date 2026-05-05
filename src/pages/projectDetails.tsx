@@ -11,6 +11,7 @@ import withLoading from '../utils/WithLoading.tsx';
 import { useSelector } from 'react-redux';
 import DonationForm from './DonationForm.tsx';
 import { toast } from 'react-hot-toast';
+import Modal from '../components/Modal.tsx';
 
 const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 function ProjectDetails() {
@@ -25,6 +26,9 @@ function ProjectDetails() {
   const [similarProjects, setSimilarProjects] = useState<any[]>([]);
   const [donationAmount, setDonationAmount] = useState<number | string>('');
   const [isCustomAmount, setIsCustomAmount] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportReason, setReportReason] = useState('other');
+  const [isReporting, setIsReporting] = useState(false);
   const user = useSelector((state: any) => state.auth.user);
   const handleRating = async () => {
     try {
@@ -35,6 +39,20 @@ function ProjectDetails() {
       setCommentRefresh((prev) => prev + 1);
     } catch (error) {
       toast.error('Failed to submit rating. Please try again.');
+    }
+  };
+
+  const handleReportProject = async () => {
+    setIsReporting(true);
+    try {
+      await api.post(`${BASE_URL}/interactions/projects/${params.id}/reports/`, { reason: reportReason });
+      toast.success('Project reported successfully');
+      setIsReportModalOpen(false);
+      setReportReason('other');
+    } catch (error) {
+      toast.error('Failed to report project. Please try again.');
+    } finally {
+      setIsReporting(false);
     }
   };
 
@@ -99,8 +117,10 @@ function ProjectDetails() {
     ? 0
     : Math.ceil((Number(new Date(project.end_time)) - Date.now()) / (1000 * 60 * 60 * 24));
   return (
-    <div className="grid grid-cols-3 gap-3 bg-[var(--color-background)] p-5">
-      <div className="col-span-2">
+    <>
+    <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 bg-[var(--color-background)] p-4 md:p-5">
+      {/* ── Main content ── */}
+      <div className="lg:col-span-2">
         <ImageSlider images={images}></ImageSlider>
         <div className="flex gap-2 flex-wrap items-center mt-6">
           <span className="bg-[rgba(255,86,0,0.1)] text-[var(--color-primary)] border border-[var(--color-primary)] rounded-md label-md px-2 py-1">
@@ -115,7 +135,7 @@ function ProjectDetails() {
             </span>
           ))}
         </div>
-        <h1 className="display-lg mt-3 mb-2">{project.title}</h1>
+        <h1 className="display-lg mt-3 mb-2 text-2xl md:text-4xl lg:text-5xl">{project.title}</h1>
         <p className="body-md text-[var(--color-text-secondary)] leading-relaxed mb-6">
           {project.details}
         </p>
@@ -130,7 +150,7 @@ function ProjectDetails() {
         />
         <div className="mt-12">
           <h3 className="headline-md mb-6">You Might Also Like</h3>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {similarProjects.map((project: any, index) => (
               <Link to={`/projectDetails/${project.id}/`} key={project.id || index}>
                 <ProjectCardDetails
@@ -144,7 +164,9 @@ function ProjectDetails() {
           </div>
         </div>
       </div>
-      <div className="sticky top-6">
+
+      {/* ── Sidebar ── */}
+      <div className="lg:sticky lg:top-6 mt-6 lg:mt-0">
         <div className="card p-6">
           <h2 className="text-3xl font-bold text-[var(--color-on-background)]">
             ${project.total_donated}
@@ -306,9 +328,49 @@ function ProjectDetails() {
             isExpired={isExpired}
           ></CreatorToolKit>
         )}
+
+        {user && user.username !== project.owner && (
+          <div className="mt-4 pt-4 border-t border-[var(--color-outline-variant)] text-center">
+            <button
+              onClick={() => setIsReportModalOpen(true)}
+              className="w-full py-2 px-4 text-sm font-semibold text-red-500 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-500 transition-colors"
+            >
+              🚩 Report this Project
+            </button>
+          </div>
+        )}
       </div>
     </div>
+
+    <Modal
+      isOpen={isReportModalOpen}
+      title="Report Project"
+      message="Please select a reason for reporting this project:"
+      confirmLabel="Submit Report"
+      onConfirm={handleReportProject}
+      onClose={() => setIsReportModalOpen(false)}
+      isLoading={isReporting}
+    >
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">
+          Reason
+        </label>
+        <select
+          value={reportReason}
+          onChange={(e) => setReportReason(e.target.value)}
+          className="w-full border border-[var(--color-outline-variant)] rounded-md px-3 py-2 bg-white text-sm outline-none"
+          disabled={isReporting}
+        >
+          <option value="spam">Spam</option>
+          <option value="inappropriate">Inappropriate Content</option>
+          <option value="fraud">Fraud</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </Modal>
+    </>
   );
 }
 
 export default ProjectDetails;
+
